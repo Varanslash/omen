@@ -29,43 +29,83 @@ Operands 00 - 05 use the u8th number first (e.g., ADD 3 \[%stack: 35, 34, 23\] =
 ### LIST OF INSTRUCTIONS
 
 00 - NOP - Does nothing.
+
 01 - ADD u8 - Adds all values up to u8 slots deep into the stack and pushes the result back onto the stack.
+
 02 - SUB u8 - Subtracts all values up to u8 slots deep into the stack and pushes the result back.
+
 03 - MUL u8 - Multiplies all values up to u8 slots deep into the stack and pushes the result back.
+
 04 - DIV u8 - Divides all values up to u8 slots deep into the stack and pushes the result back.
+
 05 - MOD u8 - Computes the modulus of all values up to u8 slots deep into the stack and pushes the result back.
+
 10 - JMP ref - Jumps to the referral specified.
+
 11 - JPIF ref - Jumps to the referral specified if the top of the stack is 0x01.
+
 12 - CALL ref - Calls the referral specified, pushing the current address onto the stack as a return address.
+
 13 - CLIF ref - Calls the referral specified if the top of the stack is 0x01, pushing the current address onto the stack as a return address.
+
 14 - RET - Returns from the current function, popping the return address from the stack and jumping to it.
+
 15 - GOTO address - Jumps to the specified address.
+
 16 - GTIF address - Jumps to the specified address if the top of the stack is 0x01. 
+
 17 - JPFF ref - Jumps to the referral specified if the top of the stack is 0x00.
+
 C0 - PUSH data - Pushes the specified data onto the stack.
+
 C1 - LOAD ref - Loads the data at the referral specified onto the stack.
+
 C2 - STR flag ref - Stores the top of the stack at the referral specified, in the zone specified by the flag. Flags are as follows: 00 => main memory, 01 => WRAM, 02 => VRAM (includes color ram), 03 => OAM
+
 C3 - STRR reg - Stores the top of the stack at the specified register.
+
 C4 - DREF - Pops the top of the stack and treats the bottom 32 bits as a referral, loading the data at that referral onto the stack.
+
 C5 - LODR - Loads a register's value onto the stack.
-E0 - CMP condition - Pops the top two values from the stack and compares them according to the specified condition (e.g., equal, not equal, greater than, less than), pushing the result (0x01 for true, 0x00 for false) back onto the stack.
+
+E0 - CMP condition - Pops the top two values from the stack and compares them according to the specified condition (e.g., equal, not equal, greater than, less than), pushing the result (0x01 for true, 0x00 for false) back 
+onto the stack.
+
 E1 - NOT - Pops the top of the stack, performs a bitwise NOT operation on it, and pushes the result back onto the stack.
+
 E2 - AND - Pops the top two values from the stack, performs a bitwise AND operation on them.
+
 E3 - OR - Pops the top two values from the stack, performs a bitwise OR operation on them, and pushes the result back onto the stack.
+
 E4 - XOR - Pops the top two values from the stack, performs a bitwise XOR operation on them, and pushes the result back onto the stack.
+
 E5 - XNOR - Pops the top two values from the stack, performs a bitwise XNOR operation on them, and pushes the result back onto the stack.
+
 E6 - NOR - Pops the top two values from the stack, performs a bitwise NOR operation on them, and pushes the result back onto the stack.
+
 E7 - NAND - Pops the top two values from the stack, performs a bitwise NAND operation on them, and pushes the result back onto the stack.
+
 F0 - DRAW ref - Takes all tile/palette data from the specified referral or referral range and draws it at the %cursorX and %cursorY values.
+
 F1 - INPT - Reads input from the user and pushes it onto the stack.
-F2 - WAIT u16 - Waits for a specific interrupt or scanline, specified by the 16-bit unsigned integer operand, then handles the interrupt. The 16 bit interrupts are as follows: 0x00// => an HBlank scanline, 0x01// => VBlank, 0x02// => Any HBlank
+
+F2 - WAIT u16 - Waits for a specific interrupt or scanline, specified by the 16-bit unsigned integer operand, then handles the interrupt. The 16 bit interrupts are as follows: 0x00// => an HBlank scanline, 0x01// => 
+VBlank, 0x02// => Any HBlank
+
 F3 - PLAY ref - Plays the sound stored at the ref its operand points to. (ex: PLAY 0x00001000 \[0x00001000: { 0x80000000 }\] => plays sound at 80000000)
+
 F4 - PLRW ref - Plays the sound stored at the ref. (ex: PLRW 0x00001000 => plays sound at 00001000)
+
 F5 - DI int - Disables a certain interrupt.
+
 F6 - EI int - Enables a certain interrupt.
+
 F7 - DIS - Disables all interrupts.
+
 F8 - EIS - Enables all interrupts.
+
 F9 - INT - Forces a certain interrupt.
+
 
 ## SYNTAX
 
@@ -134,9 +174,13 @@ A block is a sequence of instructions and data that can be executed or reference
 ## MEMORY MODEL
 
 The OMEN Machine uses a memory model comprised of four main types of memory and a set of registers. The four main types of memory are main memory, WRAM, VRAM, and OAM. 
+
 Main memory is used for storing code and data that is not related to graphics or sound. 
+
 WRAM is used for temporary storage of data and code during program execution. 
+
 VRAM is used for storing data related to graphics and display, including tile data, palette data, and sprite data. 
+
 OAM is used for storing data related to sprites and objects.
 
 Each memory type functions on an address bus where each address references 10 bytes of data. This means that each address can store a 80-bit value, which can be interpreted as either code or data depending on the context in which it is used.
