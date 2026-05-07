@@ -2,7 +2,7 @@
 
 ## INTRODUCTION
 
-This specification defines the main design of the theoretical OMEN programming language.
+This specification defines the main design of the theoretical OMEN programming language. 
 
 OMEN is a non-typed, procedural programming language designed to be as unsafe as possible. It is intended to be used on punch cards as a computer science project.
 In OMEN, data is code, and code is data. This means that there is no distinction between the two, and they can be used interchangeably.
